@@ -74,27 +74,13 @@ install(
     ${ConfigPackageLocation}
 )
 install(
-    FILES
-        ${INSTALL_DIR}/src/_node/src/aliased_buffer.h
-        ${INSTALL_DIR}/src/_node/src/node_javascript.h
-        ${INSTALL_DIR}/src/_node/src/node_internals.h
-        ${INSTALL_DIR}/src/_node/src/util.h
-        ${INSTALL_DIR}/src/_node/src/util-inl.h
-        ${INSTALL_DIR}/src/_node/src/env.h
-        ${INSTALL_DIR}/src/_node/src/env-inl.h
-        ${INSTALL_DIR}/src/_node/src/node_perf_common.h
-        ${INSTALL_DIR}/src/_node/src/node_debug_options.h
-    DESTINATION 
-        include/node
+    CODE "file( GLOB _NODE_PRIV_HEADERS \"${INSTALL_DIR}/src/_node/src/*.h\" \"${INSTALL_DIR}/src/_node/deps/cares/include/*.h\" )"
+    CODE "file( INSTALL \${_NODE_PRIV_HEADERS} DESTINATION \"${INSTALL_DIR}/include/node\" )"
 )
 install(
-    FILES
-        ${INSTALL_DIR}/src/_node/src/tracing/trace_event.h
-        ${INSTALL_DIR}/src/_node/src/tracing/trace_event_common.h
-    DESTINATION 
-        include/node/tracing
+    CODE "file( GLOB _NODE_PRIV_HEADERS \"${INSTALL_DIR}/src/_node/src/tracing/*.h\")"
+    CODE "file( INSTALL \${_NODE_PRIV_HEADERS} DESTINATION \"${INSTALL_DIR}/include/node/tracing\" )"
 )
-
 install(DIRECTORY ${INSTALL_DIR}/bin/     DESTINATION bin)
 install(DIRECTORY ${INSTALL_DIR}/include/ DESTINATION include)
 install(DIRECTORY ${INSTALL_DIR}/lib/     DESTINATION lib)
